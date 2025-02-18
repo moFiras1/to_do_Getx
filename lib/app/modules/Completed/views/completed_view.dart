@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../../../core/Bottom-nav-bar.dart';
 import '../../../../core/schemas/task_model.dart';
 import '../../../../core/schemas/tasks_service.dart';
 import '../../../../core/shered_component/circular_button.dart';
@@ -34,17 +33,6 @@ class CompletedView extends GetView<CompletedController> {
                       'Completed',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'October 15',
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
                 CircularButton(
@@ -70,7 +58,6 @@ class CompletedView extends GetView<CompletedController> {
           itemCount: completedTasks.length,
           itemBuilder: (context, index) {
             return TaskText(
-              task: completedTasks[index],
               index: index,
             );
           },
@@ -78,7 +65,6 @@ class CompletedView extends GetView<CompletedController> {
       }),
 
 
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

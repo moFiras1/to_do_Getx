@@ -9,24 +9,13 @@ class HomeController extends GetxController {
   final TasksService tasksService = Get.find<TasksService>();
 
   final GetStorage storage = GetStorage();
-    var selectedIndex = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    tasksService.loadTasks();
   }
 
-// nav bar
-//   void selectNewIndex(int index) {
-//     selectedIndex.value = index;
-//     refresh();
-//   }
-  void selectNewIndex(int index) {
-    if (selectedIndex.value != index) {
-      selectedIndex.value = index;
-    }
-  }
+
 
 
   lineThrough(index) {
@@ -35,6 +24,6 @@ class HomeController extends GetxController {
         : TextStyle(
             decoration: TextDecoration.lineThrough,
             fontSize: 20,
-            color: Colors.grey);
+            color: Colors.green);
   }
 }

@@ -20,7 +20,7 @@ void editTask(int index, String newText, String newDate) {
       tasks.clear();
       tasks.addAll(storedTasks.map((e) => TaskModel.fromJson(e)).toList());
     }
-    Future.microtask(() => tasks.refresh());
+    tasks.refresh();
 
   }//////////
 
@@ -31,14 +31,13 @@ void editTask(int index, String newText, String newDate) {
 completedTask(){
 
 }
-  void onChecked(bool? value, int index) {
-    if (value != null) {
-      Future.microtask(() {
-        tasks[index].isChecked.value = value;
-        saveTask();
-      });
-    }
+void onChecked(bool? value, int index) {
+  if (value != null) {
+    tasks[index].isChecked.value = value;
   }
+  saveTask();
+  tasks.refresh();
+}
 
 void deleteTask(index) {
   tasks.removeAt(index);

@@ -1,70 +1,48 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:to_do_getx/core/shered_component/task_text.dart';
-
-import '../../../../core/Bottom-nav-bar.dart';
 import '../../../../core/schemas/tasks_service.dart';
-import '../../../../core/shered_component/circular_button.dart';
-import '../controllers/home_controller.dart';
+import '../../Completed/views/completed_view.dart';
+import '../../Pending/views/pending_view.dart';
+import '../../all/views/all_view.dart';
 
-class HomeView extends GetView<HomeController> {
+class HomeView extends StatefulWidget {
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   final TasksService tasksService = Get.find<TasksService>();
+  int selectedIndex = 0;
+
+  void onTap(index) {
+    selectedIndex = index;
+    setState(() {});
+  }
+
+  List<Widget> widgetList = [AllView(),  PendingView(),CompletedView()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(144),
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: 84,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 11),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Task',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'October 15',
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                CircularButton(
-                  bgColor: Theme.of(context).primaryColor,
-                  myIcon: Icons.add,
-                  iconColor: Colors.white,
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-      body: Obx(() => ListView.builder(
-        itemCount: tasksService.tasks.length,
-        itemBuilder: (context, index) {
-          return TaskText(
-            task: tasksService.tasks[index],
-            index: index,
-          );
-        },
-      )),
-      bottomNavigationBar:BottomNavBar(),
-    );
+        body: widgetList[selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: onTap,
+          selectedIconTheme: IconThemeData(color: Colors.blue),
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add),
+                label: 'All',
+                backgroundColor: Colors.grey),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.pending),
+                label: 'Pending',
+                backgroundColor: Colors.grey),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.done),
+                label: 'Completed',
+                backgroundColor: Colors.grey),
+          ],
+        ));
   }
 }

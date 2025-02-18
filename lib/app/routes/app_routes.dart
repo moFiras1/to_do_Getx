@@ -7,6 +7,7 @@ abstract class Routes {
   static const PENDING = _Paths.PENDING;
   static const COMPLETED = _Paths.COMPLETED;
   static const ADD_TASK = _Paths.ADD_TASK;
+  static const ALL = _Paths.ALL;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const PENDING = '/pending';
   static const COMPLETED = '/completed';
   static const ADD_TASK = '/add-task';
+  static const ALL = '/all';
 }

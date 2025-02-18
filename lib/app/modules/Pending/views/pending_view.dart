@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/Bottom-nav-bar.dart';
+import '../../../../core/schemas/task_model.dart';
+import '../../../../core/schemas/tasks_service.dart';
 import '../../../../core/shered_component/circular_button.dart';
 import '../../../../core/shered_component/task_text.dart';
 import '../controllers/pending_controller.dart';
 
 class PendingView extends GetView<PendingController> {
-  const PendingView({super.key});
+  PendingView({super.key});
+
+  final TasksService tasksService = Get.find<TasksService>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:PreferredSize(
+      appBar: PreferredSize(
         preferredSize: Size.fromHeight(144),
         child: Padding(
           padding: EdgeInsets.only(
@@ -30,21 +35,10 @@ class PendingView extends GetView<PendingController> {
                       'Pending',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            'October 15',
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ],
-                      ),
-                    )
                   ],
                 ),
                 CircularButton(
-                  bgColor:Color(0xffFF6F61),
+                  bgColor: Color(0xffFF6F61),
                   myIcon: Icons.timer_sharp,
                   iconColor: Colors.white,
                   size: 24,
@@ -54,11 +48,23 @@ class PendingView extends GetView<PendingController> {
           ),
         ),
       ),
-      body: ListView(children: [
-        SizedBox(height: 103,),
+      body: Obx(() {
+        final List<TaskModel> pendingTasks =
+            tasksService.tasks.where((task) => task.isChecked.value == false ).toList();
 
-      ]),
-      bottomNavigationBar: BottomNavBar(),
+        if (pendingTasks.isEmpty) {
+          return Center(child: Text("No pending tasks"));
+        }
+
+        return ListView.builder(
+          itemCount: pendingTasks.length,
+          itemBuilder: (context, index) {
+            return TaskText(
+              index: index,
+            );
+          },
+        );
+      }),
     );
   }
 }

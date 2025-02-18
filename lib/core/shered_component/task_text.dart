@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:to_do_getx/app/modules/home/controllers/home_controller.dart';
-import 'package:to_do_getx/core/schemas/task_model.dart';
 import 'package:to_do_getx/core/shered_component/show_bottom_sheet.dart';
 
 import '../schemas/tasks_service.dart';
 
 
 class TaskText extends GetView<HomeController> {
-  final TaskModel task;
   final int index;
   final TasksService tasksService = Get.find<TasksService>();
-
-  TaskText({super.key, required this.task, required this.index});
+  TaskText({super.key, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +20,7 @@ class TaskText extends GetView<HomeController> {
           child: Obx(
                 () =>
                 Checkbox(
-                  value: task.isChecked.value,
+                  value: tasksService.tasks[index].isChecked.value,
                   onChanged: (bool? value) {
                     tasksService.onChecked(value, index);
                   },
@@ -39,12 +36,12 @@ class TaskText extends GetView<HomeController> {
           children: [
             Obx(
               () =>  Text(
-                task.text,
+                tasksService.tasks[index].text,
                 style:controller.lineThrough(index),
               ),
             ),
             Text(
-              task.time,
+              tasksService.tasks[index].time,
               style: TextStyle(
                   color: Color(0xffA3A3A3).withOpacity(1), fontSize: 18),
             ),
