@@ -18,12 +18,4 @@ class HomeController extends GetxController {
 
 
 
-  lineThrough(index) {
-    return tasksService.tasks[index].isChecked.value == false
-        ? TextStyle(color: Colors.black, fontSize: 20)
-        : TextStyle(
-            decoration: TextDecoration.lineThrough,
-            fontSize: 20,
-            color: Colors.green);
-  }
 }

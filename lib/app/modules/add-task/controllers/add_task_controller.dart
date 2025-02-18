@@ -4,7 +4,6 @@ import '../../../../core/schemas/task_model.dart';
 import '../../../../core/schemas/tasks_service.dart';
 
 class AddTaskController extends GetxController {
-
   final TasksService tasksService = Get.find<TasksService>();
 
   @override
@@ -21,19 +20,15 @@ class AddTaskController extends GetxController {
   void onClose() {
     super.onClose();
   }
+
   void addTask(String task, String date) {
     tasksService.tasks.add(TaskModel(
       id: tasksService.tasks.length + 1,
       text: task,
       isChecked: false,
       time: date,
-
-    )
-
-    );
+    ));
+    tasksService.updateLists();
     tasksService.saveTask();
   }
-
-
-
 }

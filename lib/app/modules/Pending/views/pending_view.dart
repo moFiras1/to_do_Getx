@@ -49,18 +49,20 @@ class PendingView extends GetView<PendingController> {
         ),
       ),
       body: Obx(() {
-        final List<TaskModel> pendingTasks =
-            tasksService.tasks.where((task) => task.isChecked.value == false ).toList();
 
-        if (pendingTasks.isEmpty) {
+        print(' pending list length  ${ tasksService.pendingTaskList.length}');
+        if (tasksService.pendingTaskList.isEmpty) {
           return Center(child: Text("No pending tasks"));
         }
 
         return ListView.builder(
-          itemCount: pendingTasks.length,
+          itemCount: tasksService.pendingTaskList.length,
           itemBuilder: (context, index) {
+            print('item builder index iss  $index ');
+            print(' pending list length  ${tasksService.pendingTaskList.length}');
             return TaskText(
               index: index,
+              tasks: tasksService.pendingTaskList,
             );
           },
         );

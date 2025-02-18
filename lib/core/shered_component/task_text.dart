@@ -3,13 +3,15 @@ import 'package:get/get.dart';
 import 'package:to_do_getx/app/modules/home/controllers/home_controller.dart';
 import 'package:to_do_getx/core/shered_component/show_bottom_sheet.dart';
 
+import '../schemas/task_model.dart';
 import '../schemas/tasks_service.dart';
 
 
 class TaskText extends GetView<HomeController> {
   final int index;
+  final RxList<TaskModel> tasks;
   final TasksService tasksService = Get.find<TasksService>();
-  TaskText({super.key, required this.index});
+  TaskText({super.key, required this.index, required this.tasks});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +22,12 @@ class TaskText extends GetView<HomeController> {
           child: Obx(
                 () =>
                 Checkbox(
-                  value: tasksService.tasks[index].isChecked.value,
+                  value: tasks[index].isChecked.value,
                   onChanged: (bool? value) {
-                    tasksService.onChecked(value, index);
+                    tasks[index].isChecked.value = value!;
+                    tasksService.updateLists();
+                    tasksService.saveTask();///////////////////////////////////////////////////////
+                    // tasksService.onChecked(value, index);
                   },
                   activeColor: Color(0xff008080),
                 ),
@@ -36,12 +41,16 @@ class TaskText extends GetView<HomeController> {
           children: [
             Obx(
               () =>  Text(
-                tasksService.tasks[index].text,
-                style:controller.lineThrough(index),
+                tasks[index].text,
+                style: TextStyle(
+                    decoration: tasks[index].isChecked.value ? TextDecoration.lineThrough : null,
+                    fontSize: 20,
+                    color: tasks[index].isChecked.value ?  Colors.green : Colors.black,
+                ),////////////////////////////
               ),
             ),
             Text(
-              tasksService.tasks[index].time,
+              tasks[index].time,
               style: TextStyle(
                   color: Color(0xffA3A3A3).withOpacity(1), fontSize: 18),
             ),

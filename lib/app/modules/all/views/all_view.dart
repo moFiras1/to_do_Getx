@@ -50,6 +50,7 @@ class AllView extends GetView<AllController> {
         itemBuilder: (context, index) {
           return TaskText(
             index: index,
+            tasks: tasksService.tasks,
           );
         },
       )),
