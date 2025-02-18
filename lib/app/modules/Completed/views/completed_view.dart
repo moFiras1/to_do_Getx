@@ -59,6 +59,7 @@ class CompletedView extends GetView<CompletedController> {
           itemBuilder: (context, index) {
             return TaskText(
               index: index,
+              tasks: tasksService.competedTaskList,
             );
           },
         );

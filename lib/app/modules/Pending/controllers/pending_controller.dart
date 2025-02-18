@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 
 class PendingController extends GetxController {
-  //TODO: Implement PendingController
 
   final count = 0.obs;
   @override
@@ -20,4 +19,9 @@ class PendingController extends GetxController {
   }
 
   void increment() => count.value++;
+
+getpendingList(){
+
+}
+
 }
